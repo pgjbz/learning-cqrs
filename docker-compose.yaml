@@ -27,9 +27,27 @@ services:
     depends_on:
     - zookeeper
   
+  mongodb:
+    image: docker.io/mongo:6.0
+    ports:
+    - 27017:27017
+    restart: on-failure
+    volumes:
+    - mongo_data:/data/db
+  
+  postgresql:
+    image: docker.io/postgres:15-alpine
+    ports:
+    - 5432:5432
+    environment:
+      POSTGRES_DB: cqrs
+      POSTGRES_USER: cqrs
+      POSTGRES_PASSWORD: cqrs
+  
 volumes:
   zookeeper_data:
   kafka_data:
+  mongo_data:
 
 networks:
   cqrs-net:
