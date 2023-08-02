@@ -1,3 +1,3 @@
 # Learning more about CQRS
 
-This repository have a unique propose, store my code for my studies about CQRS
+This repository has a unique proposal, store my code for my studies about CQRS
