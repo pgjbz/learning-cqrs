@@ -13,4 +13,7 @@
         <java.version>17</java.version>
     </properties>
 
+    <modules>
+        <module>cqrs.core</module>
+    </modules>
 </project>
