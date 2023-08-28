@@ -30,11 +30,6 @@
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>dev.pgjbz</groupId>
-			<artifactId>cqrs.core</artifactId>
-			<version>1.0.0</version>
-		</dependency>
         <dependency>
             <groupId>dev.pgjbz</groupId>
             <artifactId>account.common</artifactId>
@@ -68,6 +63,12 @@
 			<artifactId>spring-kafka-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>dev.pgjbz</groupId>
+            <artifactId>cqrs.core</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 	<build>
