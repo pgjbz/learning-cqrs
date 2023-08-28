@@ -49,6 +49,8 @@ services:
       POSTGRES_DB: cqrs
       POSTGRES_USER: cqrs
       POSTGRES_PASSWORD: cqrs
+    volumes:
+    - pg_data:/var/lib/postgresql/data
     networks:
     - cqrs-net
 
@@ -56,6 +58,7 @@ volumes:
   zookeeper_data:
   kafka_data:
   mongo_data:
+  pg_data:
 
 networks:
   cqrs-net:
