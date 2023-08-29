@@ -11,4 +11,8 @@ import java.time.LocalDateTime;
 public record AccountOpenedEvent(String id, int version, String accountHolder, AccountType accountType,
                                  LocalDateTime createdDate, BigDecimal openingBalance) implements BaseEvent {
 
+    @Override
+    public BaseEvent withVersion(int version) {
+        return new AccountOpenedEvent(id(), version, accountHolder(), accountType(), createdDate(), openingBalance());
+    }
 }

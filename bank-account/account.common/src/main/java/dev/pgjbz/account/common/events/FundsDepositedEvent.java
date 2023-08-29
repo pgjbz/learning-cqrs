@@ -7,5 +7,9 @@ import java.math.BigDecimal;
 
 @Builder
 public record FundsDepositedEvent(String id, int version, BigDecimal amount) implements BaseEvent {
-    
+
+    @Override
+    public BaseEvent withVersion(int version) {
+        return new FundsDepositedEvent(id(), version, amount());
+    }
 }
