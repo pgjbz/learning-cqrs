@@ -6,6 +6,7 @@ import dev.pgjbz.account.common.events.AccountOpenedEvent;
 import dev.pgjbz.account.common.events.FundsDepositedEvent;
 import dev.pgjbz.account.common.events.FundsWithdrawnEvent;
 import dev.pgjbz.cqrs.core.domain.AggregateRoot;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AccountAggregate extends AggregateRoot {
     private Boolean active;
+    @Getter
     private BigDecimal balance;
 
     public AccountAggregate(final OpenAccountCommand command) {
