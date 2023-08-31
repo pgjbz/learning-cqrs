@@ -15,10 +15,10 @@ public abstract class AggregateRoot {
     protected String id;
     @Setter
     private int version = -1;
-    private final List<BaseEvent> changes = new ArrayList<>();
+    private final List<BaseEvent> uncommittedChanges = new ArrayList<>();
 
     public void markChangesAsCommitted() {
-        this.changes.clear();
+        this.uncommittedChanges.clear();
     }
 
     protected void applyChange(final BaseEvent event, final boolean isNewEvent) {
@@ -32,7 +32,7 @@ public abstract class AggregateRoot {
             log.error("error apply event to aggregate", e);
         } finally {
             if(isNewEvent) {
-                changes.add(event);
+                uncommittedChanges.add(event);
             }
         }
     }
