@@ -22,7 +22,7 @@ public class AccountEventStore implements EventStore {
     private final EventStoreRepository eventStoreRepository;
 
     @Override
-    public void saveEvents(String aggregateId, Iterable<BaseEvent> events, int expectedVersion) {
+    public void saveEvents(final String aggregateId, final Iterable<BaseEvent> events, final int expectedVersion) {
         final var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
         if(expectedVersion != -1 && eventStream.get(eventStream.size() - 1).version() != expectedVersion)
             throw new ConcurrencyException();
@@ -44,7 +44,7 @@ public class AccountEventStore implements EventStore {
     }
 
     @Override
-    public List<BaseEvent> getEvent(String aggregateId) {
+    public List<BaseEvent> getEvent(final String aggregateId) {
         final var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
         if(CollectionUtils.isEmpty(eventStream))
             throw new AggregateNotFoundException("incorrect account ID provided!");

@@ -15,13 +15,13 @@ public class AccountCommandDispatcher implements CommandDispatcher {
     private final Map<Class<? extends BaseCommand>, List<CommandHandlerMethod>> routes = new HashMap<>();
 
     @Override
-    public <T extends BaseCommand> void registerHandler(Class<T> type, CommandHandlerMethod handler) {
+    public <T extends BaseCommand> void registerHandler(final Class<T> type, CommandHandlerMethod handler) {
         final var handles = routes.computeIfAbsent(type, c -> new LinkedList<>());
         handles.add(handler);
     }
 
     @Override
-    public void send(BaseCommand command) {
+    public void send(final BaseCommand command) {
         final var handlers = routes.get(command.getClass());
         if(CollectionUtils.isEmpty(handlers))
             throw new RuntimeException("No command handler was registered");

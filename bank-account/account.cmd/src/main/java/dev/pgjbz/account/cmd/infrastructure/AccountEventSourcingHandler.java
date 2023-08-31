@@ -19,13 +19,13 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
     private final EventStore eventStore;
 
     @Override
-    public void save(AggregateRoot aggregate) {
+    public void save(final AggregateRoot aggregate) {
         eventStore.saveEvents(aggregate.getId(), aggregate.getUncommittedChanges(), aggregate.getVersion());
         aggregate.markChangesAsCommitted();
     }
 
     @Override
-    public AccountAggregate getById(String id) {
+    public AccountAggregate getById(final String id) {
         final AccountAggregate aggregate = new AccountAggregate();
         final var events = eventStore.getEvent(id);
         if (!CollectionUtils.isEmpty(events)) {

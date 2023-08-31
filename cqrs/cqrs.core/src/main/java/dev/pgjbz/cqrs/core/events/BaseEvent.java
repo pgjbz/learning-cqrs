@@ -4,5 +4,5 @@ import dev.pgjbz.cqrs.core.messages.Message;
 
 public interface BaseEvent extends Message {
     int version();
-    BaseEvent withVersion(int version);
+    BaseEvent withVersion(final int version);
 }
