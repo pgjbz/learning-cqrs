@@ -6,6 +6,7 @@ import dev.pgjbz.cqrs.core.events.EventModel;
 import dev.pgjbz.cqrs.core.exceptions.AggregateNotFoundException;
 import dev.pgjbz.cqrs.core.exceptions.ConcurrencyException;
 import dev.pgjbz.cqrs.core.infrastructure.EventStore;
+import dev.pgjbz.cqrs.core.producers.EventProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -13,13 +14,14 @@ import org.springframework.util.CollectionUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static java.util.Objects.nonNull;
+import static org.springframework.util.StringUtils.hasLength;
 
 @Service
 @RequiredArgsConstructor
 public class AccountEventStore implements EventStore {
 
     private final EventStoreRepository eventStoreRepository;
+    private final EventProducer eventProducer;
 
     @Override
     public void saveEvents(final String aggregateId, final Iterable<BaseEvent> events, final int expectedVersion) {
@@ -37,8 +39,8 @@ public class AccountEventStore implements EventStore {
                     .eventData(newEvent)
                     .build();
             final var persistedEvent = eventStoreRepository.save(eventModel);
-            if(nonNull(persistedEvent)) {
-                //TODO: publish to kafka
+            if(!hasLength(persistedEvent.id())) {
+                eventProducer.produce(event.getClass().getSimpleName(), event);
             }
         }
     }
