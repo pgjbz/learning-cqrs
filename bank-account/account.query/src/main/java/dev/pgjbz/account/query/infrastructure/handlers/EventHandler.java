@@ -1,4 +1,4 @@
-package dev.pgjbz.account.query.handlers;
+package dev.pgjbz.account.query.infrastructure.handlers;
 
 import dev.pgjbz.account.common.events.AccountClosedEvent;
 import dev.pgjbz.account.common.events.AccountOpenedEvent;
