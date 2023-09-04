@@ -14,17 +14,18 @@ import java.util.Map;
 @Service
 public class AccountCommandDispatcher implements CommandDispatcher {
 
-    private final Map<Class<? extends BaseCommand>, List<CommandHandlerMethod>> routes = new HashMap<>();
+    private final Map<Class<? extends BaseCommand>, List<CommandHandlerMethod<BaseCommand>>> routes = new HashMap<>();
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends BaseCommand> void registerHandler(final Class<T> type, CommandHandlerMethod<T> handler) {
-        final var handles = routes.computeIfAbsent(type, c -> new LinkedList<>());
-        handles.add(handler);
+        final List<CommandHandlerMethod<BaseCommand>> handles = routes.computeIfAbsent(type, c -> new LinkedList<>());
+        handles.add((CommandHandlerMethod<BaseCommand>)handler);
     }
 
     @Override
     public void send(final BaseCommand command) {
-        final var handlers = routes.get(command.getClass());
+        final List<CommandHandlerMethod<BaseCommand>> handlers = routes.get(command.getClass());
         if(CollectionUtils.isEmpty(handlers))
             throw new RuntimeException("No command handler was registered");
         if(handlers.size() > 1)

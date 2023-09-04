@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;
+import java.util.List;
 
 
 @Service
@@ -27,7 +28,7 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
     @Override
     public AccountAggregate getById(final String id) {
         final AccountAggregate aggregate = new AccountAggregate();
-        final var events = eventStore.getEvent(id);
+        final List<BaseEvent> events = eventStore.getEvent(id);
         if (!CollectionUtils.isEmpty(events)) {
             aggregate.replayEvents(events);
             events.stream()

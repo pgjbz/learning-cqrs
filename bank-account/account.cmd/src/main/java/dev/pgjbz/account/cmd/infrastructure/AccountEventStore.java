@@ -25,20 +25,20 @@ public class AccountEventStore implements EventStore {
 
     @Override
     public void saveEvents(final String aggregateId, final Iterable<BaseEvent> events, final int expectedVersion) {
-        final var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
+        final List<EventModel> eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
         if(expectedVersion != -1 && eventStream.get(eventStream.size() - 1).version() != expectedVersion)
             throw new ConcurrencyException();
-        var version = expectedVersion;
-        for(final var event: events){
+        int version = expectedVersion;
+        for(final BaseEvent event: events){
             version++;
-            final var newEvent = event.withVersion(version);
+            final BaseEvent newEvent = event.withVersion(version);
             final var eventModel = EventModel.builder()
                     .timeStamp(LocalDateTime.now())
                     .aggregateIdentifier(aggregateId)
                     .aggregateType(event.getClass().getTypeName())
                     .eventData(newEvent)
                     .build();
-            final var persistedEvent = eventStoreRepository.save(eventModel);
+            final EventModel persistedEvent = eventStoreRepository.save(eventModel);
             if(!hasLength(persistedEvent.id())) {
                 eventProducer.produce(event.getClass().getSimpleName(), event);
             }
@@ -47,7 +47,7 @@ public class AccountEventStore implements EventStore {
 
     @Override
     public List<BaseEvent> getEvent(final String aggregateId) {
-        final var eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
+        final List<EventModel> eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
         if(CollectionUtils.isEmpty(eventStream))
             throw new AggregateNotFoundException("incorrect account ID provided!");
         return eventStream.stream().map(EventModel::eventData).toList();

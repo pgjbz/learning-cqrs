@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public abstract class AggregateRoot {
 
     protected void applyChange(final BaseEvent event, final boolean isNewEvent) {
         try {
-            final var method = getClass().getDeclaredMethod("apply", event.getClass());
+            final Method method = getClass().getDeclaredMethod("apply", event.getClass());
             method.setAccessible(true);
             method.invoke(this, event);
         } catch (NoSuchMethodException ex) {
