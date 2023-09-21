@@ -39,7 +39,7 @@ public class AccountEventStore implements EventStore {
                     .eventData(newEvent)
                     .build();
             final EventModel persistedEvent = eventStoreRepository.save(eventModel);
-            if(!hasLength(persistedEvent.id())) {
+            if(hasLength(persistedEvent.id())) {
                 eventProducer.produce(event.getClass().getSimpleName(), event);
             }
         }

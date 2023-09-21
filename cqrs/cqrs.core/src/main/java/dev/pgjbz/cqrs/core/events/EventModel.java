@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
 @Builder
-@Document(collation = "eventStore")
+@Document(collection = "eventStore")
 public record EventModel(
         @Id
         String id,
