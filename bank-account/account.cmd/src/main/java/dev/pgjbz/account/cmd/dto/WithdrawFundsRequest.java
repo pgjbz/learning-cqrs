@@ -2,5 +2,5 @@ package dev.pgjbz.account.cmd.dto;
 
 import java.math.BigDecimal;
 
-public record DepositFundsRequest(BigDecimal amount) {
+public record WithdrawFundsRequest(BigDecimal amount){
 }

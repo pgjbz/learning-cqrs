@@ -8,6 +8,7 @@ import dev.pgjbz.cqrs.core.exceptions.ConcurrencyException;
 import dev.pgjbz.cqrs.core.infrastructure.EventStore;
 import dev.pgjbz.cqrs.core.producers.EventProducer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 import static org.springframework.util.StringUtils.hasLength;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountEventStore implements EventStore {
@@ -26,6 +28,7 @@ public class AccountEventStore implements EventStore {
     @Override
     public void saveEvents(final String aggregateId, final Iterable<BaseEvent> events, final int expectedVersion) {
         final List<EventModel> eventStream = eventStoreRepository.findByAggregateIdentifier(aggregateId);
+        log.info("expected version for aggregateId '{}' is '{}'", aggregateId, expectedVersion);
         if(expectedVersion != -1 && eventStream.get(eventStream.size() - 1).version() != expectedVersion)
             throw new ConcurrencyException();
         int version = expectedVersion;
@@ -37,6 +40,7 @@ public class AccountEventStore implements EventStore {
                     .aggregateIdentifier(aggregateId)
                     .aggregateType(event.getClass().getTypeName())
                     .eventData(newEvent)
+                    .version(version)
                     .build();
             final EventModel persistedEvent = eventStoreRepository.save(eventModel);
             if(hasLength(persistedEvent.id())) {

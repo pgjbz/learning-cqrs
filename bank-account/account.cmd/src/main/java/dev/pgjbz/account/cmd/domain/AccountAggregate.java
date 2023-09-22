@@ -62,7 +62,7 @@ public class AccountAggregate extends AggregateRoot {
 
     public void apply(final FundsWithdrawnEvent event) {
         this.id = event.id();
-        this.balance = event.amount().subtract(this.balance.abs());
+        this.balance = this.balance.abs().subtract(event.amount().abs());
     }
 
     public void closeAccount() {

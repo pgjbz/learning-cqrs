@@ -3,10 +3,12 @@ package dev.pgjbz.account.cmd.api.commands;
 import dev.pgjbz.account.cmd.domain.AccountAggregate;
 import dev.pgjbz.cqrs.core.handlers.EventSourcingHandler;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountCommandHandler implements CommandHandler {
@@ -29,7 +31,8 @@ public class AccountCommandHandler implements CommandHandler {
     @Override
     public void handle(WithdrawFundsCommand command) {
         final AccountAggregate aggregate = eventSourcingHandler.getById(command.id());
-        final BigDecimal commandAmount = command.amount();
+        final BigDecimal commandAmount = command.amount().abs();
+        log.info("withdraw '{}' from account '{}' with balance '{}'", commandAmount, command.id(), aggregate.getBalance());
         if (commandAmount.compareTo(aggregate.getBalance()) > 0)
             throw new IllegalStateException("Withdraw declined, insufficient funds!");
         aggregate.withdrawFunds(commandAmount);
