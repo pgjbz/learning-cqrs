@@ -2,6 +2,7 @@ package dev.pgjbz.account.cmd.api.exceptions;
 
 
 import dev.pgjbz.account.common.dto.BaseResponse;
+import dev.pgjbz.cqrs.core.exceptions.AggregateNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(status)
                 .body(new StandardError(message, status));
+    }
+
+    @ExceptionHandler(AggregateNotFoundException.class)
+    public ResponseEntity<BaseResponse> handle(final AggregateNotFoundException ex) {
+        final String message = ex.getMessage();
+        log.warn("Client made a bad request - {}", message);
+        int status = HttpStatus.NOT_FOUND.value();
+        return ResponseEntity.status(status).body(new StandardError(message, status));
     }
 
     @ExceptionHandler(Exception.class)
