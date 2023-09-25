@@ -1,6 +1,11 @@
 package dev.pgjbz.account.cmd.domain;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import dev.pgjbz.account.cmd.api.commands.OpenAccountCommand;
+import dev.pgjbz.account.cmd.domain.exception.AccountClosedException;
+import dev.pgjbz.account.cmd.domain.exception.InvalidAmountException;
 import dev.pgjbz.account.common.events.AccountClosedEvent;
 import dev.pgjbz.account.common.events.AccountOpenedEvent;
 import dev.pgjbz.account.common.events.FundsDepositedEvent;
@@ -8,9 +13,6 @@ import dev.pgjbz.account.common.events.FundsWithdrawnEvent;
 import dev.pgjbz.cqrs.core.domain.AggregateRoot;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 public class AccountAggregate extends AggregateRoot {
@@ -36,10 +38,10 @@ public class AccountAggregate extends AggregateRoot {
 
     public void depositFunds(final BigDecimal amount) {
         if (!this.active)
-            throw new IllegalArgumentException("funds cannot be deposited into a closed account!");
+            throw new AccountClosedException("funds cannot be deposited into a closed account!");
 
         if (amount.signum() < 0 || BigDecimal.ZERO.equals(amount))
-            throw new IllegalArgumentException("the deposit amount mus be greater than zero");
+            throw new InvalidAmountException("the deposit amount mus be greater than zero");
         raiseEvent(FundsDepositedEvent.builder()
                 .id(this.id)
                 .amount(amount)
@@ -53,7 +55,7 @@ public class AccountAggregate extends AggregateRoot {
 
     public void withdrawFunds(final BigDecimal amount) {
         if (!this.active)
-            throw new IllegalArgumentException("funds cannot be withdraw from a closed account!");
+            throw new AccountClosedException("funds cannot be withdraw from a closed account!");
         raiseEvent(FundsWithdrawnEvent.builder()
                 .id(this.id)
                 .amount(amount)
@@ -67,7 +69,7 @@ public class AccountAggregate extends AggregateRoot {
 
     public void closeAccount() {
         if (!this.active)
-            throw new IllegalArgumentException("the bank account has already been closed!");
+            throw new AccountClosedException("the bank account has already been closed!");
         raiseEvent(AccountClosedEvent.builder().id(this.id).build());
     }
 

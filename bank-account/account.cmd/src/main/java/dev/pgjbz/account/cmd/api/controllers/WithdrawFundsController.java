@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(value = "/api/v1/withdrawFunds")
 @RequiredArgsConstructor
+@RequestMapping(value = "/api/v1/withdrawFunds")
 public class WithdrawFundsController {
 
     private final CommandDispatcher commandDispatcher;

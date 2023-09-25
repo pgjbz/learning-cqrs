@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/api/v1/depositFunds")
 @RequiredArgsConstructor
+@RequestMapping(value = "/api/v1/depositFunds")
 public class DepositFundsController {
 
     private final CommandDispatcher commandDispatcher;
