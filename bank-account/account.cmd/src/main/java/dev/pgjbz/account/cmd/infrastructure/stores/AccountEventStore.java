@@ -1,6 +1,6 @@
-package dev.pgjbz.account.cmd.infrastructure;
+package dev.pgjbz.account.cmd.infrastructure.stores;
 
-import dev.pgjbz.account.cmd.domain.EventStoreRepository;
+import dev.pgjbz.account.cmd.domain.repository.EventStoreRepository;
 import dev.pgjbz.cqrs.core.events.BaseEvent;
 import dev.pgjbz.cqrs.core.events.EventModel;
 import dev.pgjbz.cqrs.core.exceptions.AggregateNotFoundException;

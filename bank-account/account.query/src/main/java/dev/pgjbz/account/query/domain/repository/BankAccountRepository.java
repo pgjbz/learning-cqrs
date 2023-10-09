@@ -1,5 +1,6 @@
-package dev.pgjbz.account.query.domain;
+package dev.pgjbz.account.query.domain.repository;
 
+import dev.pgjbz.account.query.domain.models.BankAccount;
 import dev.pgjbz.cqrs.core.domain.BaseEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

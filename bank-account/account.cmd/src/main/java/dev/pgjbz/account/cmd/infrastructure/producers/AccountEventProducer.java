@@ -1,4 +1,4 @@
-package dev.pgjbz.account.cmd.infrastructure;
+package dev.pgjbz.account.cmd.infrastructure.producers;
 
 import dev.pgjbz.cqrs.core.events.BaseEvent;
 import dev.pgjbz.cqrs.core.producers.EventProducer;

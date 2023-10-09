@@ -1,4 +1,4 @@
-package dev.pgjbz.account.cmd.domain;
+package dev.pgjbz.account.cmd.domain.repository;
 
 import dev.pgjbz.cqrs.core.events.EventModel;
 import org.springframework.data.mongodb.repository.MongoRepository;

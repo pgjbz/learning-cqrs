@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.pgjbz.account.cmd.api.commands.CloseAccountCommand;
-import dev.pgjbz.account.cmd.dto.CloseAccountResponse;
+import dev.pgjbz.account.cmd.dto.response.CloseAccountResponse;
 import dev.pgjbz.account.common.dto.BaseResponse;
 import dev.pgjbz.cqrs.core.infrastructure.CommandDispatcher;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package dev.pgjbz.account.cmd.dto;
+package dev.pgjbz.account.cmd.dto.response;
 
 import dev.pgjbz.account.common.dto.BaseResponse;
 

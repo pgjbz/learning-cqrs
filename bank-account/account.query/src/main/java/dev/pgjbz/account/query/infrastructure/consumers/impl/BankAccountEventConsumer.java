@@ -1,9 +1,10 @@
-package dev.pgjbz.account.query.infrastructure.consumers;
+package dev.pgjbz.account.query.infrastructure.consumers.impl;
 
 import dev.pgjbz.account.common.events.AccountClosedEvent;
 import dev.pgjbz.account.common.events.AccountOpenedEvent;
 import dev.pgjbz.account.common.events.FundsDepositedEvent;
 import dev.pgjbz.account.common.events.FundsWithdrawnEvent;
+import dev.pgjbz.account.query.infrastructure.consumers.EventConsumer;
 import dev.pgjbz.account.query.infrastructure.handlers.EventHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

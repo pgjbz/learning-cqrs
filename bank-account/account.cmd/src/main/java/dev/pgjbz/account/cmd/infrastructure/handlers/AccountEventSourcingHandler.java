@@ -1,6 +1,6 @@
-package dev.pgjbz.account.cmd.infrastructure;
+package dev.pgjbz.account.cmd.infrastructure.handlers;
 
-import dev.pgjbz.account.cmd.domain.AccountAggregate;
+import dev.pgjbz.account.cmd.domain.aggregates.AccountAggregate;
 import dev.pgjbz.cqrs.core.domain.AggregateRoot;
 import dev.pgjbz.cqrs.core.events.BaseEvent;
 import dev.pgjbz.cqrs.core.handlers.EventSourcingHandler;

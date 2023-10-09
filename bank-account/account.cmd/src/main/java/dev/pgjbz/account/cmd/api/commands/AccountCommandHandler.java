@@ -1,6 +1,6 @@
 package dev.pgjbz.account.cmd.api.commands;
 
-import dev.pgjbz.account.cmd.domain.AccountAggregate;
+import dev.pgjbz.account.cmd.domain.aggregates.AccountAggregate;
 import dev.pgjbz.cqrs.core.handlers.EventSourcingHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

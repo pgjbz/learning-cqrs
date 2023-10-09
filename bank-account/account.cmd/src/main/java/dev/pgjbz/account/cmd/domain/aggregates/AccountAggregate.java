@@ -1,4 +1,4 @@
-package dev.pgjbz.account.cmd.domain;
+package dev.pgjbz.account.cmd.domain.aggregates;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

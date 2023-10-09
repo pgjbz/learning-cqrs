@@ -1,4 +1,4 @@
-package dev.pgjbz.account.cmd.infrastructure;
+package dev.pgjbz.account.cmd.infrastructure.dispatchers;
 
 import dev.pgjbz.cqrs.core.commands.BaseCommand;
 import dev.pgjbz.cqrs.core.commands.CommandHandlerMethod;

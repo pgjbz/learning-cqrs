@@ -1,11 +1,12 @@
-package dev.pgjbz.account.query.infrastructure.handlers;
+package dev.pgjbz.account.query.infrastructure.handlers.impl;
 
 import dev.pgjbz.account.common.events.AccountClosedEvent;
 import dev.pgjbz.account.common.events.AccountOpenedEvent;
 import dev.pgjbz.account.common.events.FundsDepositedEvent;
 import dev.pgjbz.account.common.events.FundsWithdrawnEvent;
-import dev.pgjbz.account.query.domain.BankAccount;
-import dev.pgjbz.account.query.domain.BankAccountRepository;
+import dev.pgjbz.account.query.domain.models.BankAccount;
+import dev.pgjbz.account.query.domain.repository.BankAccountRepository;
+import dev.pgjbz.account.query.infrastructure.handlers.EventHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
 
 @Service
 @RequiredArgsConstructor
-public class BankAccountEventHandler implements  EventHandler{
+public class BankAccountEventHandler implements EventHandler {
 
     private final BankAccountRepository accountRepository;
 
