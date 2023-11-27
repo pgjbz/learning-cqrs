@@ -1,8 +1,5 @@
 package dev.pgjbz.account.cmd.domain.aggregates;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
 import dev.pgjbz.account.cmd.api.commands.OpenAccountCommand;
 import dev.pgjbz.account.cmd.domain.exception.AccountClosedException;
 import dev.pgjbz.account.cmd.domain.exception.InvalidAmountException;
@@ -14,10 +11,13 @@ import dev.pgjbz.cqrs.core.domain.AggregateRoot;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Getter
 @NoArgsConstructor
 public class AccountAggregate extends AggregateRoot {
     private Boolean active;
-    @Getter
     private BigDecimal balance;
 
     public AccountAggregate(final OpenAccountCommand command) {

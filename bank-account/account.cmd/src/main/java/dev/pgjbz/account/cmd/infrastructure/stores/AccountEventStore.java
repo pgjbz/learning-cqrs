@@ -1,6 +1,7 @@
 package dev.pgjbz.account.cmd.infrastructure.stores;
 
 import dev.pgjbz.account.cmd.domain.repository.EventStoreRepository;
+import dev.pgjbz.account.cmd.infrastructure.exceptions.EmptyEventStoreException;
 import dev.pgjbz.cqrs.core.events.BaseEvent;
 import dev.pgjbz.cqrs.core.events.EventModel;
 import dev.pgjbz.cqrs.core.exceptions.AggregateNotFoundException;
@@ -55,5 +56,14 @@ public class AccountEventStore implements EventStore {
         if(CollectionUtils.isEmpty(eventStream))
             throw new AggregateNotFoundException("incorrect account ID provided!");
         return eventStream.stream().map(EventModel::eventData).toList();
+    }
+
+    @Override
+    public List<String> getAggregateIds() {
+        final List<EventModel> eventStream = eventStoreRepository.findAll();
+        if(CollectionUtils.isEmpty(eventStream)) {
+            throw new EmptyEventStoreException();
+        }
+        return eventStream.stream().map(EventModel::aggregateIdentifier).toList();
     }
 }

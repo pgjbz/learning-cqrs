@@ -5,12 +5,14 @@ import dev.pgjbz.cqrs.core.domain.AggregateRoot;
 import dev.pgjbz.cqrs.core.events.BaseEvent;
 import dev.pgjbz.cqrs.core.handlers.EventSourcingHandler;
 import dev.pgjbz.cqrs.core.infrastructure.EventStore;
+import dev.pgjbz.cqrs.core.producers.EventProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -18,6 +20,7 @@ import java.util.List;
 public class AccountEventSourcingHandler implements EventSourcingHandler<AccountAggregate> {
 
     private final EventStore eventStore;
+    private final EventProducer eventProducer;
 
     @Override
     public void save(final AggregateRoot aggregate) {
@@ -37,5 +40,18 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
                 .ifPresent(aggregate::setVersion);
         }
         return aggregate;
+    }
+
+    @Override
+    public void republishEvents() {
+        final List<String> aggregateIds = eventStore.getAggregateIds();
+        for(final String aggregateId: aggregateIds) {
+            final AccountAggregate accountAggregate = getById(aggregateId);
+            if(Objects.isNull(accountAggregate) || !accountAggregate.getActive()) continue;
+            final List<BaseEvent> events = eventStore.getEvent(aggregateId);
+            for(final BaseEvent event: events) {
+                eventProducer.produce(event.getClass().getSimpleName(), event);
+            }
+        }
     }
 }

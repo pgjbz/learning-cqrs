@@ -23,6 +23,7 @@ public class CommandDispatcherConfig {
         commandDispatcher.registerHandler(DepositFundsCommand.class, commandHandler::handle);
         commandDispatcher.registerHandler(WithdrawFundsCommand.class, commandHandler::handle);
         commandDispatcher.registerHandler(CloseAccountCommand.class, commandHandler::handle);
+        commandDispatcher.registerHandler(RestoreDatabaseCommand.class, commandHandler::handle);
         log.info("handlers registered successfully");
     }
 

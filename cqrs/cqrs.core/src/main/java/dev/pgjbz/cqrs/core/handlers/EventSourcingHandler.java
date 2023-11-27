@@ -5,4 +5,5 @@ import dev.pgjbz.cqrs.core.domain.AggregateRoot;
 public interface EventSourcingHandler<T> {
     void save(final AggregateRoot aggregate);
     T getById(final String id);
+    void republishEvents();
 }

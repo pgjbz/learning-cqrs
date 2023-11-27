@@ -5,4 +5,5 @@ public interface CommandHandler {
     void handle(final DepositFundsCommand command);
     void handle(final WithdrawFundsCommand command);
     void handle(final CloseAccountCommand command);
+    void handle(final RestoreDatabaseCommand command);
 }
